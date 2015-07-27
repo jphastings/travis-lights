@@ -1,0 +1,1 @@
+web: bundle exec rackup -spuma -p$PORT -o0.0.0.0
