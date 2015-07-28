@@ -13,8 +13,9 @@ module Traffic
   RED   = 0b0100
 
   class WebApp < Sinatra::Base
-    set :markdown, layout_engine: :erb, fenced_code_blocks: true
+    set :markdown, layout_engine: :erb, fenced_code_blocks: true, with_toc_data: true, autolink: true
     set :root, File.join(__dir__, '..')
+    set :logging, true
 
     configure do |app|
       app.set(:spark, Faraday.new { |http|
@@ -58,7 +59,9 @@ module Traffic
         req.body = { 'params' => lights }
         req.options.timeout = 2
       end
+      logger.info "Sent signal #{lights} to #{spark_id}"
     rescue Faraday::TimeoutError
+      logger.info "Spark ID did not respond: #{spark_id}"
       halt(504)
     end
 
@@ -80,13 +83,19 @@ module Traffic
 
     def travis_token
       ENV["travis.#{repo_owner}"].tap do |token|
-        halt(404) if token.nil?
+        if token.nil?
+          logger.info "Travis owner not registered: #{repo_owner}"
+          halt(404)
+        end
       end
     end
 
     def spark_auth
       ENV["spark.#{spark_id}"].tap do |auth|
-        halt(401) if auth.nil?
+        if auth.nil?
+          logger.info "Spark ID not registered: #{spark_id}"
+          halt(401)
+        end
       end
     end
   end
