@@ -29,6 +29,20 @@ spark.<your-spark-device-id>=<your-spark-token>
 travis.<your-repo-owner>=<your-travis-token-for-that-user>
 ```
 
+## Build your hardware
+
+My hardware was more complex than it needed to be (Particle now offers a [relay shield](https://store.particle.io/?product=relay-shield) which is perfect for this), but still very simple.
+
+<style>.right { float:right; max-height:200px; margin:5px; }</style>
+<img src="img/breadboard.jpg" alt="The spark on breadboard" class="right"/>
+<img src="img/wired-relay.jpg" alt="The relay, wired up to control circuitry and mains" class="right"/>
+
+I attached my spark to a 4 channel relay module I [found on eBay](http://www.ebay.co.uk/itm/UK-5V-4-Channel-Relay-Module-Shield-for-Arduino-ARM-PIC-AVR-DSP-/231552687750) and rigged each of the three traffic light bulbs to it.
+
+I figured out the hard way that you need to use isolated power supplies for relay control and the spark (the [back emf](https://en.wikipedia.org/wiki/Counter-electromotive_force) from switching the relays on and off occasionally triggers the spark to reset).
+
+Please take care when you wire up the mains lines to the relay, make sure there are no bare wires that might touch other metalic objects and, if you can, cover the mains contacts with electrical tape once you're done. Always completely detach your traffic lights when you're working on the electronics!
+
 ## Bring your traffic lights online
 
 Flash your spark with the following Processing code:

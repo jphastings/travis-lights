@@ -15,9 +15,10 @@ module Traffic
   class WebApp < Sinatra::Base
     set :markdown, layout_engine: :erb, fenced_code_blocks: true, with_toc_data: true, autolink: true
     set :root, File.join(__dir__, '..')
-    set :logging, true
 
     configure do |app|
+      enable :logging
+      use Rack::CommonLogger
       app.set(:spark, Faraday.new { |http|
         http.request  :url_encoded
         http.adapter  Faraday.default_adapter
