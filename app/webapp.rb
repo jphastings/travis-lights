@@ -1,4 +1,6 @@
 require_relative 'env'
+require 'tilt/redcarpet'
+require 'tilt/erb'
 require 'sinatra/base'
 require 'hashie/mash'
 require 'digest/sha2'
@@ -11,11 +13,18 @@ module Traffic
   RED   = 0b0100
 
   class WebApp < Sinatra::Base
+    set :markdown, layout_engine: :erb, fenced_code_blocks: true
+    set :root, File.join(__dir__, '..')
+
     configure do |app|
       app.set(:spark, Faraday.new { |http|
         http.request  :url_encoded
         http.adapter  Faraday.default_adapter
       })
+    end
+
+    get '/' do
+      markdown File.read('README.md')
     end
 
     post '/travis' do
@@ -43,9 +52,9 @@ module Traffic
     end
 
     def change_lights(lights)
-      settings.spark.post do |req|
-        req.url = "https://api.particle.io/v1/devices/#{spark_id}/traffic"
-        req.headers = { 'Authorization' => "Bearer #{spark_auth}"}
+      res = settings.spark.post do |req|
+        req.url "https://api.particle.io/v1/devices/#{spark_id}/traffic"
+        req.headers['Authorization'] = "Bearer #{spark_auth}"
         req.body = { 'params' => lights }
         req.options.timeout = 2
       end
