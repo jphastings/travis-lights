@@ -12,7 +12,7 @@ You'll need to configure Travis so that it talks to your traffic light controlle
 notifications:
   webhooks:
     urls:
-      - http://traffic.byjp.me/travis?<your-spark-device-id>
+      - http://traffic.byjp.me/travis/<your-spark-device-id>
     on_success: always
     on_failure: always
     on_start: always

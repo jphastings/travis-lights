@@ -29,7 +29,7 @@ module Traffic
       markdown File.read('README.md')
     end
 
-    post '/travis' do
+    post '/travis/:spark_id' do
       halt(401) unless from_travis?
       halt(406) unless travis_payload.branch == 'master'
 
@@ -79,7 +79,7 @@ module Traffic
     end
 
     def spark_id
-      request.query_string
+      params[:spark_id]
     end
 
     def travis_token
