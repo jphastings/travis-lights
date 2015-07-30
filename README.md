@@ -52,31 +52,49 @@ Flash your spark with the following Processing code:
 
 ```processing
 // Set your pins here
-int lamp_g = D0;
-int lamp_a = D2;
-int lamp_r = D1;
+int green = D0;
+int amber = D2;
+int red = D1;
+// The length of time to show a green light for in ms
+// Set to -1 for 'show indefinitely'.
+int showGreenFor = 60000;
+
+int switchOffAt = 0;
 
 void setup()
 {
-  pinMode(lamp_g, OUTPUT);
-  pinMode(lamp_a, OUTPUT);
-  pinMode(lamp_r, OUTPUT);
-  Spark.function("traffic", lightsToggle);
-  display(7);
+    pinMode(red, OUTPUT);
+    pinMode(amber, OUTPUT);
+    pinMode(green, OUTPUT);
+    Spark.function("traffic", lightsToggle);
+    display(7);
 }
 
-void loop() {}
+void loop()
+{
+    if (switchOffAt != 0 && millis() >= switchOffAt) {
+        display(0);
+    }
+}
 
 int display(int bits) {
-  digitalWrite(lamp_g, bits & 1);
-  digitalWrite(lamp_a, bits & 2);
-  digitalWrite(lamp_r, bits & 4);
-  return bits;
+    digitalWrite(green, bits & 1);
+    digitalWrite(amber, bits & 2);
+    digitalWrite(red, bits & 4);
+    
+    // Only show green for a little while
+    if (showGreenFor > 0) {
+        switchOffAt = 0;
+        if (bits == 1) {
+            switchOffAt = millis() + showGreenFor;
+        }
+    }
+    
+    return bits;
 }
 
 int lightsToggle(String status) {
-  display(status.toInt());
-  return 0;
+    display(status.toInt());
+    return 0;
 }
-
 ```
