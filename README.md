@@ -1,8 +1,13 @@
-# Traffic Lights
+# Travis Lights
+
+<style><!-- .right { float:right; max-height:200px; margin:5px; } --></style>
+<img src="public/img/travis-lights.gif" alt="The relay, wired up to control circuitry and mains" class="right"/>
 
 I wanted to make it _really_ clear when my builds are broken, so I hooked up a decomissioned & refurbished set of London traffic lights to a [Spark Core](https://www.particle.io/prototype) and built this small ruby web app to redirect travis build push events to it via the Particle API.
 
 These devices are very low powered, so this webapp translates Travis' [webhook notifications](http://docs.travis-ci.com/user/notifications/#Webhook-notification) into the simple POST request required by the [Core API](http://docs.particle.io/core/api/).
+
+If you're interested in building something similar yourself then have a look at the instructions below to see how I put this together!
 
 ## Set up your repo
 
@@ -33,9 +38,8 @@ travis.<your-repo-owner>=<your-travis-token-for-that-user>
 
 My hardware was more complex than it needed to be (Particle now offers a [relay shield](https://store.particle.io/?product=relay-shield) which is perfect for this), but still very simple.
 
-<style>.right { float:right; max-height:200px; margin:5px; }</style>
-<img src="img/breadboard.jpg" alt="The spark on breadboard" class="right"/>
-<img src="img/wired-relay.jpg" alt="The relay, wired up to control circuitry and mains" class="right"/>
+<img src="public/img/breadboard.jpg" alt="The spark on breadboard" class="right"/>
+<img src="public/img/wired-relay.jpg" alt="The relay, wired up to control circuitry and mains" class="right"/>
 
 I attached my spark to a 4 channel relay module I [found on eBay](http://www.ebay.co.uk/itm/UK-5V-4-Channel-Relay-Module-Shield-for-Arduino-ARM-PIC-AVR-DSP-/231552687750) and rigged each of the three traffic light bulbs to it.
 

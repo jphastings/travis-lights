@@ -26,7 +26,7 @@ module Traffic
     end
 
     get '/' do
-      markdown File.read('README.md')
+      markdown File.read('README.md').gsub('public/', '')
     end
 
     post '/travis/:spark_id' do
