@@ -47,7 +47,7 @@ module Traffic
     def from_travis?
       digest = Digest::SHA2.new.update("#{repo_slug}#{travis_token}")
       (digest.to_s == env['HTTP_AUTHORIZATION']).tap do |is_valid|
-        logger.warn "Given travis token is not correct: #{repo_owner}/#{travis_token}" unless is_valid
+        logger.warn "Given travis token is not correct: #{repo_owner}/#{env['HTTP_AUTHORIZATION']}" unless is_valid
       end
     end
 
