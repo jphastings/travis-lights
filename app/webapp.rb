@@ -46,7 +46,9 @@ module Traffic
 
     def from_travis?
       digest = Digest::SHA2.new.update("#{repo_slug}#{travis_token}")
-      digest.to_s == env['HTTP_AUTHORIZATION']
+      (digest.to_s == env['HTTP_AUTHORIZATION']).tap do |is_valid|
+        logger.warn "Given travis token is not correct: #{repo_owner}/#{travis_token}" unless is_valid
+      end
     end
 
     def travis_payload
@@ -85,7 +87,7 @@ module Traffic
     def travis_token
       ENV["travis.#{repo_owner}"].tap do |token|
         if token.nil?
-          logger.info "Travis owner not registered: #{repo_owner}"
+          logger.warn "Travis owner not registered: #{repo_owner}"
           halt(404)
         end
       end
@@ -94,7 +96,7 @@ module Traffic
     def spark_auth
       ENV["spark.#{spark_id}"].tap do |auth|
         if auth.nil?
-          logger.info "Spark ID not registered: #{spark_id}"
+          logger.warn "Spark ID not registered: #{spark_id}"
           halt(401)
         end
       end
