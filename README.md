@@ -48,7 +48,7 @@ Please take care when you wire up the mains lines to the relay, make sure there 
 
 ## Bring your traffic lights online
 
-Flash your spark with the following Processing code:
+Flash your spark with the following C code:
 
 ```processing
 // Set your pins here
