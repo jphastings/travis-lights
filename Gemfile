@@ -7,7 +7,7 @@ gem 'foreman', '~> 0.77'
 gem 'puma', '~> 4.3'
 gem 'faraday', '~> 0.9'
 gem 'hashie', '~> 3.4'
-gem 'redcarpet', '~> 3.3'
+gem 'redcarpet', '~> 3.5'
 
 group :development, :test do
   gem 'dotenv', '~> 1.0'
