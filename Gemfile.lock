@@ -15,7 +15,7 @@ GEM
     rack (1.6.13)
     rack-protection (1.5.3)
       rack
-    rake (10.4.2)
+    rake (12.3.3)
     redcarpet (3.5.1)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
@@ -46,7 +46,7 @@ DEPENDENCIES
   foreman (~> 0.77)
   hashie (~> 3.4)
   puma (~> 4.3)
-  rake (~> 10.1)
+  rake (~> 12.3)
   redcarpet (~> 3.5)
   rspec (~> 3.0)
   sinatra (~> 1.4)
