@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
-gem 'rake', '~> 10.1'
+gem 'rake', '~> 12.3'
 gem 'sinatra', '~> 1.4'
 gem 'foreman', '~> 0.77'
 gem 'puma', '~> 4.3'
